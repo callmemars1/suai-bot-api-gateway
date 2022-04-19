@@ -1,0 +1,43 @@
+﻿syntax = "proto3";
+
+package Suai.Bot.Schedule;
+
+service ScheduleProvider {
+	rpc GetSchedule(ScheduleRequest) returns (ScheduleReply);
+}
+
+message ScheduleRequest {
+	string group = 1;
+	string teacher = 2;
+	string body = 3;
+	string classRoom = 4;
+}
+
+// empty if nothing found
+message ScheduleReply {
+	repeated Lesson lessons = 1;
+}
+
+message Lesson {
+	string group = 1;
+	string teacher = 2;
+	string body = 3;
+	string classRoom = 4;
+	WeekDays weekDay = 5;
+	WeekTypes weekType = 6;
+}
+
+enum WeekDays {
+	MONDAY = 0;
+    TUESDAY = 1;
+    WEDNESDAY = 2;
+    THURSDAY = 3;
+    FRIDAY = 4;
+    SATURDAY = 5;
+    SUNDAY = 6;
+}
+
+enum WeekTypes {
+	UPPER = 0;
+	LOWER = 1;
+}
