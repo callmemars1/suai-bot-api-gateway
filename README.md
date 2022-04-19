@@ -1,1 +1,1 @@
-# suai-api-schedule
+# suai-bot-api-schedule
