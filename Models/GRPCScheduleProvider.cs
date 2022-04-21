@@ -21,6 +21,7 @@ public class GRPCScheduleProvider : IScheduleProvider
 
     public IEnumerable<Domain.Lesson> Get(string group = "", string teacher = "", string body = "", string classRoom = "")
     {
+        _logger.Log(LogLevel.Information, "Get called");
         try
         {
             var schedule = _client.GetSchedule(new ScheduleRequest
