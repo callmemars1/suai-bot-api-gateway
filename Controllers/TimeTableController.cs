@@ -40,7 +40,7 @@ public class TimeTableController : ControllerBase
                 }
             });
 
-        IEnumerable<Domain.TimeTable.Lesson> lessons;
+        IEnumerable<Lesson> lessons;
         // Попытка получить данные о расписании от сервиса
         try
         {
