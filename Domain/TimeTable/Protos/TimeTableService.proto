@@ -1,27 +1,30 @@
 ﻿syntax = "proto3";
 
-package Suai.Bot.Schedule;
+package SuaiTimeTable;
 
-service ScheduleProvider {
-	rpc GetSchedule(ScheduleRequest) returns (ScheduleReply);
+option csharp_namespace = "Suai.Bot.TimeTable.Proto";
+
+
+service TimeTableProvider {
+	rpc GetTimeTable(TimeTableRequest) returns (TimeTableReply);
 }
 
-message ScheduleRequest {
+message TimeTableRequest {
 	string group = 1;
 	string teacher = 2;
-	string body = 3;
+	string building = 3;
 	string classRoom = 4;
 }
 
 // empty if nothing found
-message ScheduleReply {
+message TimeTableReply {
 	repeated Lesson lessons = 1;
 }
 
 message Lesson {
 	string group = 1;
 	string teacher = 2;
-	string body = 3;
+	string building = 3;
 	string classRoom = 4;
 	WeekDays weekDay = 5;
 	WeekTypes weekType = 6;

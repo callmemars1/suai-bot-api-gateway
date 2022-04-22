@@ -10,7 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Domain\Protos\ScheduleService.proto" />
+    <None Remove="Domain\TimeTable\Protos\TimeTableService.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,12 +25,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Domain\Protos\ScheduleService.proto" />
+    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" />
   </ItemGroup>
 
 </Project>

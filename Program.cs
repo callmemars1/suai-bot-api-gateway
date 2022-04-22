@@ -15,11 +15,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IScheduleProvider>((x) =>
+builder.Services.AddSingleton<ITimeTableProvider>((x) =>
 {
     //var serviceUrl = builder.Configuration.GetValue<string>("schedule_service_addr");
     var serviceUrl = "http://127.0.0.1:2288/";
-    return new GRPCScheduleProvider(x.GetRequiredService<ILogger<GRPCScheduleProvider>>(), serviceUrl);
+    return new GRPCTimeTableProvider(x.GetRequiredService<ILogger<GRPCTimeTableProvider>>(), serviceUrl);
 });
 
 var app = builder.Build();
