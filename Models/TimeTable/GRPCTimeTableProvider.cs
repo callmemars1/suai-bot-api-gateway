@@ -3,7 +3,7 @@ using Grpc.Core;
 using Suai.Bot.TimeTable.Proto;
 using suai_api_schedule.Domain.TimeTable.Exceptions;
 
-namespace suai_api_schedule.Models;
+namespace suai_api_schedule.Models.TimeTable;
 
 public class GRPCTimeTableProvider : ITimeTableProvider
 {
@@ -31,13 +31,13 @@ public class GRPCTimeTableProvider : ITimeTableProvider
                 ClassRoom = classRoom
             });
             _reconnectCounter = 0;
-            _logger.Log(LogLevel.Information, "Received schedule from service");
+            _logger.Log(LogLevel.Information, "Received timetable from service");
             return schedule.Lessons.AsEnumerable().Select((lesson) =>
             {
                 return new Domain.TimeTable.Lesson
                 {
                     Group = lesson.Group,
-                    Body = lesson.Building,
+                    Building = lesson.Building,
                     ClassRoom = lesson.ClassRoom,
                     Teacher = lesson.Teacher,
                     WeekDay = (Domain.TimeTable.WeekDays)((int)lesson.WeekDay),
