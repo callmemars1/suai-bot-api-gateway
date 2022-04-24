@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Grpc.Core;
+using Microsoft.AspNetCore.Mvc;
 using suai_api_schedule.Domain.TimeTable;
 using suai_api_schedule.Domain.TimeTable.Exceptions;
 using suai_api_schedule.Models.TimeTable;
@@ -52,6 +53,16 @@ public class TimeTableController : ControllerBase
         {
             _logger.Log(LogLevel.Warning, "TimeTable service unavailable");
             return StatusCode(503);
+        }
+        // Ошибка процедуры (но сервис доступен)
+        catch (RpcException ex) 
+        {
+            return ex.StatusCode switch
+            {
+                Grpc.Core.StatusCode.NotFound => StatusCode(404),
+                Grpc.Core.StatusCode.DeadlineExceeded => StatusCode(504),
+                _ => StatusCode(500),
+            };
         }
         return new JsonResult(lessons);
     }

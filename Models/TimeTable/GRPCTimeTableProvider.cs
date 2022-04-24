@@ -45,11 +45,15 @@ public class GRPCTimeTableProvider : ITimeTableProvider
                 };
             });
         }
-        catch (RpcException)
+        catch (RpcException e)
         {
-            // if we not connected to the service, we trying to reconnect
-            Reconnect();
-            return GetTimeTable(group, teacher, building, classRoom);
+            if (e.StatusCode == StatusCode.DataLoss || e.StatusCode == StatusCode.Unavailable)
+            {
+                // if we not connected to the service, we trying to reconnect
+                Reconnect();
+                return GetTimeTable(group, teacher, building, classRoom);
+            }
+            throw;
         }
     }
     private void Reconnect()
