@@ -22,33 +22,34 @@ https://wedonthavedomain.com/api.timeTable.get?university=SUAI&group=1001&teache
 ```yaml
 {
   "university": "SUAI",
-  [
-    {
-      "group": "1011",
-      "teacher": "Иванов И.И.",
-      "classRoom": "12-02",
-      "building": "Пр-кт Победы д.28",
-      "university": "SUAI",
-      "lessonName": "Экономика",
-      "startTime": "9:30", 
-      "endTime": "11:00",
-      "order": 1,
-      "weekDay": 0,
-      "weekType": 1,
-    },
-    {
-      "group": "1011",
-      "teacher": "Иванов И.И.",
-      "classRoom": "12-02",
-      "building": "Пр-кт Победы д.28",
-      "lessonName": "Бухгалтерский учет",
-      "startTime": "11:10", 
-      "endTime": "12:40",
-      "order": 2,
-      "weekDay": 0,
-      "weekType": 1,
-    }
-  ]
+  "lessons": 
+    [
+      {
+        "group": "1011",
+        "teacher": "Иванов И.И.",
+        "classRoom": "12-02",
+        "building": "Пр-кт Победы д.28",
+        "university": "SUAI",
+        "lessonName": "Экономика",
+        "startTime": "9:30", 
+        "endTime": "11:00",
+        "order": 1,
+        "weekDay": 0,
+        "weekType": 1,
+      },
+      {
+        "group": "1011",
+        "teacher": "Иванов И.И.",
+        "classRoom": "12-02",
+        "building": "Пр-кт Победы д.28",
+        "lessonName": "Бухгалтерский учет",
+        "startTime": "11:10", 
+        "endTime": "12:40",
+        "order": 2,
+        "weekDay": 0,
+        "weekType": 1,
+      }
+    ]
 }
 ```
 #### Аргументы 
