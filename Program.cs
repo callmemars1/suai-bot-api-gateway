@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Hosting.Server.Features;
-using suai_api_schedule.Models;
 using suai_api_schedule.Models.TimeTable;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +19,7 @@ var app = builder.Build();
 
 app.Map("/", () =>
 {
-    return $"This is main page\nUse {app.Urls.First()}/api.[service].[method]/ to use api\n";
+    return $"This is main page\nAdd \"/api.[service].[method]/\" to address string to use api\n";
 });
 
 //app.UseHttpsRedirection();
