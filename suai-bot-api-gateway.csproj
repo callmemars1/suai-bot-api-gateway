@@ -33,4 +33,8 @@
     <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\TeacherInfo\" />
+  </ItemGroup>
+
 </Project>
