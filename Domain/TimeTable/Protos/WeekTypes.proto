@@ -6,6 +6,7 @@ option csharp_namespace = "Suai.Bot.TimeTable.Proto";
 
 enum WeekTypes 
 {
-	UPPER = 0;
-	LOWER = 1;
+	WEEKTYPES_UNSPECIFIED = 0;
+	UPPER = 1;
+	LOWER = 2;
 }

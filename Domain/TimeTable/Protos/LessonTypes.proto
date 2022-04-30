@@ -6,9 +6,10 @@ option csharp_namespace = "Suai.Bot.TimeTable.Proto";
 
 enum LessonTypes 
 {
-	LECTURE = 0;
-	PRACTICAL = 1;
-	LABORATORY = 2;
-	COLLOQUIUM = 3;
-	ELECTIVE = 4;
+	LESSONTYPES_UNSPECIFIED = 0;
+	LECTURE = 1;
+	PRACTICAL = 2;
+	LABORATORY = 3;
+	COLLOQUIUM = 4;
+	ELECTIVE = 5;
 }

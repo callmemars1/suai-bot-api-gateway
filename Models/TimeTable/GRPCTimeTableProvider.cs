@@ -22,7 +22,7 @@ public class GRPCTimeTableProvider : ITimeTableProvider
     public IEnumerable<Domain.TimeTable.Lesson> GetTimeTable(string group = "", string teacher = "", string building = "", string classRoom = "")
     {
         try
-        {
+        { 
             var schedule = _client.GetTimeTable(new TimeTableRequest
             {
                 Group = group,
