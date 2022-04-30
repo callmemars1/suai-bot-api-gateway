@@ -22,10 +22,9 @@ message TeacherInfoReply
 message TeacherInfo 
 {
 	string name = 1;
-	string university = 2;
-	string institute = 3;
-	string department = 4;
-	string phone = 5;
-	string email = 6;
-	string academicDegree = 7;
+	string institute = 2;
+	string department = 3;
+	string phone = 4;
+	string email = 5;
+	string academicDegree = 6;
 }
