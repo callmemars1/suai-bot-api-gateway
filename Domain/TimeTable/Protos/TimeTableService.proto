@@ -14,11 +14,13 @@ message TimeTableRequest {
 	string teacher = 2;
 	string building = 3;
 	string classRoom = 4;
+	string university = 5;
 }
 
 // empty if nothing found
 message TimeTableReply {
 	repeated Lesson lessons = 1;
+	WeekTypes actualWeekType = 2;
 }
 
 message Lesson {
@@ -28,6 +30,7 @@ message Lesson {
 	string classRoom = 4;
 	WeekDays weekDay = 5;
 	WeekTypes weekType = 6;
+	string university = 7;
 }
 
 enum WeekDays {
