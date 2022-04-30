@@ -4,7 +4,8 @@ package SuaiTeacherInfo;
 
 option csharp_namespace = "Suai.Bot.TeacherInfo.Proto";
 
-service TeacherInfoService{
+service TeacherInfoService
+{
 	rpc GetTeacherInfo (TeacherInfoRequest) returns (TeacherInfoReply);
 }
 
