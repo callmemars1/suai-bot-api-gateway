@@ -27,4 +27,5 @@ message TeacherInfo
 	string phone = 4;
 	string email = 5;
 	string academicDegree = 6;
+	string position = 7;
 }
