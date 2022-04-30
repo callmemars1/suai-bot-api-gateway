@@ -18,29 +18,10 @@ public class TimeTableController : ControllerBase
         _timeTableProvider = scheduleProvider;
     }
 
-    // warning выключен для всего метода, т.к. компилятор не понимает, что у string? установлено значение по умолчанию и там невозможен null
-#pragma warning disable CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
-#pragma warning disable CS8601 // Возможно, назначение-ссылка, допускающее значение NULL.
     [HttpGet]
     [ActionName("get")]
-    public IActionResult GetTimeTable(string? group = "", string? teacher = "", string? building = "", string? classRoom = "", bool? test = false)
+    public IActionResult GetTimeTable(string? university, string? group, string? teacher, string? building, string? classRoom)
     {
-        _logger.Log(LogLevel.Information, "Params:\n\tg:{group}\n\tt:{teacher}\n\tb:{building}\n\tc:{classRoom}", group, teacher, building, classRoom);
-
-        if (test.HasValue && test == true)
-            return new JsonResult(new List<Lesson>()
-            {
-                new Lesson()
-                {
-                    Building = building,
-                    Group = group,
-                    ClassRoom = classRoom,
-                    Teacher =teacher,
-                    WeekDay = (int)WeekDays.Monday,
-                    WeekType = (int)WeekTypes.Upper
-                }
-            });
-
         IEnumerable<Lesson> lessons;
         // Попытка получить данные о расписании от сервиса
         try
@@ -66,7 +47,5 @@ public class TimeTableController : ControllerBase
         }
         return new JsonResult(lessons);
     }
-#pragma warning restore CS8601 // Возможно, назначение-ссылка, допускающее значение NULL.
-#pragma warning restore CS8604 // Возможно, аргумент-ссылка, допускающий значение NULL.
 
 }
