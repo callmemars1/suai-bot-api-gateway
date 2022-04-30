@@ -20,6 +20,8 @@ public class TimeTableController : ControllerBase
 
     [HttpGet]
     [ActionName("get")]
+    // TODO: Вынести аргументы в отдельную структуру для читаемости,
+    // Убрать университет из запроса :(
     public IActionResult GetTimeTable(string? university, string? group, string? teacher, string? building, string? classRoom)
     {
         IEnumerable<Lesson> lessons;
