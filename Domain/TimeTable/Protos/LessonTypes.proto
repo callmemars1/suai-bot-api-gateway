@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+package SuaiTimeTable.Types;
+
+option csharp_namespace = "Suai.Bot.TimeTable.Proto";
+
+enum LessonTypes 
+{
+	LECTURE = 0;
+	PRACTICAL = 1;
+	LABORATORY = 2;
+	COLLOQUIUM = 3;
+	ELECTIVE = 4;
+}
