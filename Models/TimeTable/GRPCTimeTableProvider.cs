@@ -1,9 +1,9 @@
 ﻿using Grpc.Net.Client;
 using Grpc.Core;
 using Suai.Bot.TimeTable.Proto;
-using suai_api_schedule.Domain.TimeTable.Exceptions;
+using suai_api.Domain.TimeTable.Exceptions;
 
-namespace suai_api_schedule.Models.TimeTable;
+namespace suai_api.Models.TimeTable;
 
 public class GRPCTimeTableProvider : ITimeTableProvider
 {
@@ -23,7 +23,7 @@ public class GRPCTimeTableProvider : ITimeTableProvider
     {
         try
         { 
-            var schedule = _client.GetTimeTable(new TimeTableRequest
+            var timeTable = _client.GetTimeTable(new TimeTableRequest
             {
                 Group = group,
                 Teacher = teacher,
@@ -32,7 +32,7 @@ public class GRPCTimeTableProvider : ITimeTableProvider
             });
             _reconnectCounter = 0;
             _logger.Log(LogLevel.Information, "Received timetable from service");
-            return schedule.Lessons.AsEnumerable().Select((lesson) =>
+            return timeTable.Lessons.AsEnumerable().Select((lesson) =>
             {
                 return new Domain.TimeTable.Lesson
                 {

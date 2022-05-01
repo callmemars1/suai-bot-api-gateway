@@ -34,10 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\"/>
+    <Protobuf Include="Domain\TeacherInfo\Protos\TeacherInfoService.proto" />
+    <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekDays.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
-    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\"/>
+    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-using suai_api_schedule.Models.TimeTable;
+using suai_api.Models.TimeTable;
 
 var builder = WebApplication.CreateBuilder(args);
 

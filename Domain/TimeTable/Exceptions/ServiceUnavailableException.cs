@@ -1,4 +1,4 @@
-﻿namespace suai_api_schedule.Domain.TimeTable.Exceptions;
+﻿namespace suai_api.Domain.TimeTable.Exceptions;
 
 public class ServiceUnavailableException : Exception
 {

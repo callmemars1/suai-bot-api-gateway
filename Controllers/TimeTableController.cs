@@ -1,10 +1,10 @@
 ﻿using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
-using suai_api_schedule.Domain.TimeTable;
-using suai_api_schedule.Domain.TimeTable.Exceptions;
-using suai_api_schedule.Models.TimeTable;
+using suai_api.Domain.TimeTable;
+using suai_api.Domain.TimeTable.Exceptions;
+using suai_api.Models.TimeTable;
 
-namespace suai_api_schedule.Controllers;
+namespace suai_api.Controllers;
 
 [ApiController()]
 [Route("api.[controller].[action]")]

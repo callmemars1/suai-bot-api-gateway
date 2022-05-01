@@ -1,7 +1,7 @@
-﻿namespace suai_api_schedule.Domain.TimeTable;
+﻿namespace suai_api.Domain.TimeTable;
 
 public enum WeekTypes
 {
-    Upper,
-    Lower
+    Upper = 1,
+    Lower = 2
 }

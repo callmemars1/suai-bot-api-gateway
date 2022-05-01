@@ -1,4 +1,4 @@
-﻿namespace suai_api_schedule.Domain.TimeTable;
+﻿namespace suai_api.Domain.TimeTable;
 
 public record class Lesson
 {

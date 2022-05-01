@@ -1,6 +1,6 @@
-﻿using suai_api_schedule.Domain.TimeTable;
+﻿using suai_api.Domain.TimeTable;
 
-namespace suai_api_schedule.Models.TimeTable;
+namespace suai_api.Models.TimeTable;
 
 public interface ITimeTableProvider
 {
