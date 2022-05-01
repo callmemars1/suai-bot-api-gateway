@@ -1,19 +1,19 @@
 ﻿syntax = "proto3";
 
-package SuaiTimeTable;
+package SuaiTimetable;
 
-option csharp_namespace = "Suai.Bot.TimeTable.Proto";
+option csharp_namespace = "Suai.Bot.Timetable.Proto";
 
 import "LessonTypes.proto";
 import "WeekTypes.proto";
 import "WeekDays.proto";
 
-service TimeTableProvider 
+service TimetableProvider 
 {
-	rpc GetTimeTable(TimeTableRequest) returns (TimeTableReply);
+	rpc GetTimetable(TimetableRequest) returns (TimetableReply);
 }
 
-message TimeTableRequest 
+message TimetableRequest 
 {
 	string group = 1;
 	string teacher = 2;
@@ -22,7 +22,7 @@ message TimeTableRequest
 }
 
 // empty if nothing found
-message TimeTableReply
+message TimetableReply
 {
 	repeated Lesson lessons = 1;
 	Types.WeekTypes actualWeekType = 2;
@@ -37,4 +37,5 @@ message Lesson
 	Types.WeekDays weekDay = 5;
 	Types.WeekTypes weekType = 6;
 	Types.LessonTypes lessonType = 7;
+	string lessonName = 8;
 }

@@ -1,4 +1,4 @@
-﻿namespace suai_api.Domain.TimeTable;
+﻿namespace suai_api.Domain.Timetable;
 
 public record class Lesson
 {
@@ -9,4 +9,5 @@ public record class Lesson
     public string LessonName { get; set; } = string.Empty;
     public WeekDays WeekDay { get; set; }
     public WeekTypes WeekType { get; set; }
+    public LessonTypes LessonType { get; set; }
 }

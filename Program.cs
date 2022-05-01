@@ -1,4 +1,4 @@
-using suai_api.Models.TimeTable;
+using suai_api.Models.Timetable;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +9,10 @@ builder.Configuration.AddCommandLine(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<ITimeTableProvider>((x) =>
+builder.Services.AddSingleton<ITimetableProvider>((x) =>
 {
     var serviceUrl = builder.Configuration.GetValue<string>("schedule_service_addr");
-    return new GRPCTimeTableProvider(x.GetRequiredService<ILogger<GRPCTimeTableProvider>>(), serviceUrl);
+    return new GRPCTimetableProvider(x.GetRequiredService<ILogger<GRPCTimetableProvider>>(), serviceUrl);
 });
 
 var app = builder.Build();

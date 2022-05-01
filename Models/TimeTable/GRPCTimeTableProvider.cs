@@ -1,61 +1,96 @@
 ﻿using Grpc.Net.Client;
 using Grpc.Core;
-using Suai.Bot.TimeTable.Proto;
-using suai_api.Domain.TimeTable.Exceptions;
+using Suai.Bot.Timetable.Proto;
+using suai_api.Domain.Timetable.Exceptions;
 
-namespace suai_api.Models.TimeTable;
+namespace suai_api.Models.Timetable;
 
-public class GRPCTimeTableProvider : ITimeTableProvider
+/// <summary>
+/// Класс необходим для получения расписания с сервиса
+/// по gRPC
+/// </summary>
+public class GRPCTimetableProvider : ITimetableProvider
 {
+    // адрес сервиса
     private readonly string _serviceAddress;
+
+    // Счетчик реконектов
     private int _reconnectCounter = 0;
-    private TimeTableProvider.TimeTableProviderClient _client;
-    private readonly ILogger<GRPCTimeTableProvider> _logger;
-    public GRPCTimeTableProvider(ILogger<GRPCTimeTableProvider> logger, string serviceAddress)
+
+    // gRPC клиент 
+    private TimetableProvider.TimetableProviderClient _client;
+
+    // логгер
+    private readonly ILogger<GRPCTimetableProvider> _logger;
+
+    /// <summary>
+    /// Конструктор
+    /// </summary>
+    /// <param name="logger">Логгер</param>
+    /// <param name="serviceAddress">URI сервиса</param>
+    public GRPCTimetableProvider(ILogger<GRPCTimetableProvider> logger, string serviceAddress)
     {
         _logger = logger;
         _serviceAddress = serviceAddress;
+        
+        // init gRPC client
         var c = GrpcChannel.ForAddress(_serviceAddress);
-        _client = new TimeTableProvider.TimeTableProviderClient(c);
+        _client = new TimetableProvider.TimetableProviderClient(c);
     }
 
-    public IEnumerable<Domain.TimeTable.Lesson> GetTimeTable(string group = "", string teacher = "", string building = "", string classRoom = "")
+    public TimetableResult GetTimetable(TimetableRequestArgs requestArgs)
     {
         try
         { 
-            var timeTable = _client.GetTimeTable(new TimeTableRequest
+            var timetable = _client.GetTimetable(new TimetableRequest
             {
-                Group = group,
-                Teacher = teacher,
-                Building = building,
-                ClassRoom = classRoom
+                Group = requestArgs.Group ?? "",
+                Teacher = requestArgs.Teacher ?? "",
+                Building = requestArgs.Building ?? "",
+                ClassRoom = requestArgs.ClassRoom ?? ""
             });
+
+            // Обнуляем счетчик, если удалось запросить
             _reconnectCounter = 0;
             _logger.Log(LogLevel.Information, "Received timetable from service");
-            return timeTable.Lessons.AsEnumerable().Select((lesson) =>
+
+            var actualWeekType = (Domain.Timetable.WeekTypes)(int)timetable.ActualWeekType;
+
+            // map proto lesson to domain lesson
+            var lessons = timetable.Lessons.AsEnumerable().Select((lesson) =>
             {
-                return new Domain.TimeTable.Lesson
+                return new Domain.Timetable.Lesson
                 {
                     Group = lesson.Group,
                     Building = lesson.Building,
                     ClassRoom = lesson.ClassRoom,
                     Teacher = lesson.Teacher,
-                    WeekDay = (Domain.TimeTable.WeekDays)((int)lesson.WeekDay),
-                    WeekType = (Domain.TimeTable.WeekTypes)((int)lesson.WeekType)
+                    WeekDay = (Domain.Timetable.WeekDays)(int)lesson.WeekDay,
+                    WeekType = (Domain.Timetable.WeekTypes)(int)lesson.WeekType,
+                    LessonType = (Domain.Timetable.LessonTypes)(int)lesson.LessonType,
+                    LessonName = lesson.LessonName
                 };
             });
+            return new TimetableResult(actualWeekType, lessons);
         }
+        // Если во время запроса произошла ошибка, то вылетит RpcException
         catch (RpcException e)
         {
-            if (e.StatusCode == StatusCode.DataLoss || e.StatusCode == StatusCode.Unavailable)
+            if (e.StatusCode is StatusCode.Unavailable or StatusCode.DeadlineExceeded)
             {
                 // if we not connected to the service, we trying to reconnect
                 Reconnect();
-                return GetTimeTable(group, teacher, building, classRoom);
+                return GetTimetable(requestArgs);
             }
+            // Если статус код не подразумевает ошибку соединения, то кидаем эксепшн выше по стеку
             throw;
         }
     }
+
+    /// <summary>
+    /// Метод, отвечающий за переподключение к сервису
+    /// </summary>
+    /// <exception cref="ServiceUnavailableException">Выбрасывается, если сервис не доступен</exception>
     private void Reconnect()
     {
         if (_reconnectCounter == 3)
@@ -65,7 +100,7 @@ public class GRPCTimeTableProvider : ITimeTableProvider
 
         // trying to reconnect
         var channel = GrpcChannel.ForAddress(_serviceAddress);
-        _client = new TimeTableProvider.TimeTableProviderClient(channel);
+        _client = new TimetableProvider.TimetableProviderClient(channel);
         ++_reconnectCounter;
     }
 }

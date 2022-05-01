@@ -1,4 +1,4 @@
-﻿namespace suai_api.Domain.TimeTable;
+﻿namespace suai_api.Domain.Timetable;
 
 public enum WeekDays
 {
