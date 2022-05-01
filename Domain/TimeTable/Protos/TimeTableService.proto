@@ -4,12 +4,17 @@ package SuaiTimeTable;
 
 option csharp_namespace = "Suai.Bot.TimeTable.Proto";
 
+import "LessonTypes.proto";
+import "WeekTypes.proto";
+import "WeekDays.proto";
 
-service TimeTableProvider {
+service TimeTableProvider 
+{
 	rpc GetTimeTable(TimeTableRequest) returns (TimeTableReply);
 }
 
-message TimeTableRequest {
+message TimeTableRequest 
+{
 	string group = 1;
 	string teacher = 2;
 	string building = 3;
@@ -17,30 +22,19 @@ message TimeTableRequest {
 }
 
 // empty if nothing found
-message TimeTableReply {
+message TimeTableReply
+{
 	repeated Lesson lessons = 1;
+	Types.WeekTypes actualWeekType = 2;
 }
 
-message Lesson {
+message Lesson
+{
 	string group = 1;
 	string teacher = 2;
 	string building = 3;
 	string classRoom = 4;
-	WeekDays weekDay = 5;
-	WeekTypes weekType = 6;
-}
-
-enum WeekDays {
-	MONDAY = 0;
-    TUESDAY = 1;
-    WEDNESDAY = 2;
-    THURSDAY = 3;
-    FRIDAY = 4;
-    SATURDAY = 5;
-    SUNDAY = 6;
-}
-
-enum WeekTypes {
-	UPPER = 0;
-	LOWER = 1;
+	Types.WeekDays weekDay = 5;
+	Types.WeekTypes weekType = 6;
+	Types.LessonTypes lessonType = 7;
 }

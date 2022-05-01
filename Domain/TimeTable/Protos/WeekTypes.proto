@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+package SuaiTimeTable.Types;
+
+option csharp_namespace = "Suai.Bot.TimeTable.Proto";
+
+enum WeekTypes 
+{
+	WEEKTYPES_UNSPECIFIED = 0;
+	UPPER = 1;
+	LOWER = 2;
+}
