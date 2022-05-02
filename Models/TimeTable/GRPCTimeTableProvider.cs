@@ -61,14 +61,18 @@ public class GRPCTimetableProvider : ITimetableProvider
             {
                 return new Domain.Timetable.Lesson
                 {
-                    Group = lesson.Group,
+                    Groups = lesson.Groups,
                     Building = lesson.Building,
                     ClassRoom = lesson.ClassRoom,
                     Teacher = lesson.Teacher,
                     WeekDay = (Domain.Timetable.WeekDays)(int)lesson.WeekDay,
                     WeekType = (Domain.Timetable.WeekTypes)(int)lesson.WeekType,
                     LessonType = (Domain.Timetable.LessonTypes)(int)lesson.LessonType,
-                    LessonName = lesson.LessonName
+                    LessonName = lesson.LessonName,
+                    EndTime = lesson.EndTime,
+                    OrderNumber = lesson.OrderNumber,
+                    StartTime = lesson.StartTime,
+
                 };
             });
             return new TimetableResult(actualWeekType, lessons);
@@ -77,7 +81,7 @@ public class GRPCTimetableProvider : ITimetableProvider
         catch (RpcException e)
         {
             if (e.StatusCode is StatusCode.Unavailable or StatusCode.DeadlineExceeded)
-            {
+            {   
                 // if we not connected to the service, we trying to reconnect
                 Reconnect();
                 return GetTimetable(requestArgs);

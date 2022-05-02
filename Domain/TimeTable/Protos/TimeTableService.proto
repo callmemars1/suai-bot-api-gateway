@@ -4,6 +4,8 @@ package SuaiTimetable;
 
 option csharp_namespace = "Suai.Bot.Timetable.Proto";
 
+import "google/protobuf/timestamp.proto";
+
 import "LessonTypes.proto";
 import "WeekTypes.proto";
 import "WeekDays.proto";
@@ -30,7 +32,7 @@ message TimetableReply
 
 message Lesson
 {
-	string group = 1;
+	repeated string groups = 1;
 	string teacher = 2;
 	string building = 3;
 	string classRoom = 4;
@@ -38,4 +40,7 @@ message Lesson
 	Types.WeekTypes weekType = 6;
 	Types.LessonTypes lessonType = 7;
 	string lessonName = 8;
+	string startTime = 9;
+	string endTime = 10;
+	int32 orderNumber = 11;
 }
