@@ -1,7 +1,5 @@
-﻿using Grpc.Net.Client;
-using Grpc.Core;
-using Suai.Bot.Timetable.Proto;
-using suai_api.Domain.Timetable.Exceptions;
+﻿using Suai.Bot.Timetable.Proto;
+using suai_api.Domain.TimeTable;
 
 namespace suai_api.Models.Timetable;
 
@@ -11,100 +9,55 @@ namespace suai_api.Models.Timetable;
 /// </summary>
 public class GRPCTimetableProvider : ITimetableProvider
 {
-    // адрес сервиса
-    private readonly string _serviceAddress;
+    private TimetableServiceGrpcClient _client;
 
-    // Счетчик реконектов
-    private int _reconnectCounter = 0;
-
-    // gRPC клиент 
-    private TimetableProvider.TimetableProviderClient _client;
-
-    // логгер
     private readonly ILogger<GRPCTimetableProvider> _logger;
 
     /// <summary>
-    /// Конструктор
     /// </summary>
-    /// <param name="logger">Логгер</param>
+    /// <param name="logger"></param>
     /// <param name="serviceAddress">URI сервиса</param>
-    public GRPCTimetableProvider(ILogger<GRPCTimetableProvider> logger, string serviceAddress)
+    public GRPCTimetableProvider(ILogger<GRPCTimetableProvider> logger, string serviceURI)
     {
         _logger = logger;
-        _serviceAddress = serviceAddress;
-        
-        // init gRPC client
-        var c = GrpcChannel.ForAddress(_serviceAddress);
-        _client = new TimetableProvider.TimetableProviderClient(c);
+        _client = new TimetableServiceGrpcClient(serviceURI);
     }
 
     public TimetableResult GetTimetable(TimetableRequestArgs requestArgs)
     {
-        try
-        { 
-            var timetable = _client.GetTimetable(new TimetableRequest
-            {
-                Group = requestArgs.Group ?? "",
-                Teacher = requestArgs.Teacher ?? "",
-                Building = requestArgs.Building ?? "",
-                ClassRoom = requestArgs.ClassRoom ?? ""
-            });
-
-            // Обнуляем счетчик, если удалось запросить
-            _reconnectCounter = 0;
-            _logger.Log(LogLevel.Information, "Received timetable from service");
-
-            var actualWeekType = (Domain.Timetable.WeekTypes)(int)timetable.ActualWeekType;
-
-            // map proto lesson to domain lesson
-            var lessons = timetable.Lessons.AsEnumerable().Select((lesson) =>
-            {
-                return new Domain.Timetable.Lesson
-                {
-                    Groups = lesson.Groups,
-                    Building = lesson.Building,
-                    ClassRoom = lesson.ClassRoom,
-                    Teacher = lesson.Teacher,
-                    WeekDay = (Domain.Timetable.WeekDays)(int)lesson.WeekDay,
-                    WeekType = (Domain.Timetable.WeekTypes)(int)lesson.WeekType,
-                    LessonType = (Domain.Timetable.LessonTypes)(int)lesson.LessonType,
-                    LessonName = lesson.LessonName,
-                    EndTime = lesson.EndTime,
-                    OrderNumber = lesson.OrderNumber,
-                    StartTime = lesson.StartTime,
-
-                };
-            });
-            return new TimetableResult(actualWeekType, lessons);
-        }
-        // Если во время запроса произошла ошибка, то вылетит RpcException
-        catch (RpcException e)
+        var timetable = _client.GetTimetable(new TimetableRequest
         {
-            if (e.StatusCode is StatusCode.Unavailable or StatusCode.DeadlineExceeded)
-            {   
-                // if we not connected to the service, we trying to reconnect
-                Reconnect();
-                return GetTimetable(requestArgs);
-            }
-            // Если статус код не подразумевает ошибку соединения, то кидаем эксепшн выше по стеку
-            throw;
-        }
+            Group = requestArgs.Group ?? "",
+            Teacher = requestArgs.Teacher ?? "",
+            Building = requestArgs.Building ?? "",
+            ClassRoom = requestArgs.ClassRoom ?? ""
+        }, maxReconnects: 3);
+
+        _logger.Log(LogLevel.Information, "Received timetable from service");
+
+        var actualWeekType = (Domain.Timetable.WeekTypes)(int)timetable.ActualWeekType;
+
+        // маппим lesson, сгенерированный протобафом в lesson, описанный нами
+        var lessons = timetable.Lessons.AsEnumerable().Select(MapProtoLessonToDomainLesson);
+
+        return new TimetableResult(actualWeekType, lessons);
     }
 
-    /// <summary>
-    /// Метод, отвечающий за переподключение к сервису
-    /// </summary>
-    /// <exception cref="ServiceUnavailableException">Выбрасывается, если сервис не доступен</exception>
-    private void Reconnect()
+    public Domain.Timetable.Lesson MapProtoLessonToDomainLesson(Lesson lesson)
     {
-        if (_reconnectCounter == 3)
+        return new Domain.Timetable.Lesson
         {
-            throw new ServiceUnavailableException();
-        }
-
-        // trying to reconnect
-        var channel = GrpcChannel.ForAddress(_serviceAddress);
-        _client = new TimetableProvider.TimetableProviderClient(channel);
-        ++_reconnectCounter;
+            Groups = lesson.Groups,
+            Building = lesson.Building,
+            ClassRoom = lesson.ClassRoom,
+            Teacher = lesson.Teacher,
+            WeekDay = (Domain.Timetable.WeekDays)(int)lesson.WeekDay,
+            WeekType = (Domain.Timetable.WeekTypes)(int)lesson.WeekType,
+            LessonType = (Domain.Timetable.LessonTypes)(int)lesson.LessonType,
+            Name = lesson.Name,
+            EndTime = lesson.EndTime,
+            OrderNumber = lesson.OrderNumber,
+            StartTime = lesson.StartTime,
+        };
     }
 }

@@ -39,7 +39,7 @@ message Lesson
 	Types.WeekDays weekDay = 5;
 	Types.WeekTypes weekType = 6;
 	Types.LessonTypes lessonType = 7;
-	string lessonName = 8;
+	string name = 8;
 	string startTime = 9;
 	string endTime = 10;
 	int32 orderNumber = 11;

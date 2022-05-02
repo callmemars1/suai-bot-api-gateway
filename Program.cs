@@ -6,7 +6,6 @@ builder.WebHost.UseSetting("https_port", "443");
 
 builder.Configuration.AddCommandLine(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<ITimetableProvider>((x) =>

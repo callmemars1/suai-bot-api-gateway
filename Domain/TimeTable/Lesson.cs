@@ -6,7 +6,7 @@ public record class Lesson
     public string Teacher { get; set; } = string.Empty;
     public string ClassRoom { get; set; } = string.Empty;
     public string Building { get; set; } = string.Empty;
-    public string LessonName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public string StartTime { get; set; } = string.Empty;
     public string EndTime { get; set; } = string.Empty;
     public int OrderNumber { get; set; }
