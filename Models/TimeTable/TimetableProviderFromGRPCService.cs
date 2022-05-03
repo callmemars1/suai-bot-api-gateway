@@ -43,9 +43,9 @@ public class TimetableProviderFromGRPCService : ITimetableProvider
         return new TimetableResult(actualWeekType, lessons);
     }
 
-    public Domain.Timetable.Lesson MapProtoLessonToDomainLesson(Lesson lesson)
+    public Domain.Timetable.LessonDto MapProtoLessonToDomainLesson(Lesson lesson)
     {
-        return new Domain.Timetable.Lesson
+        return new Domain.Timetable.LessonDto
         {
             Groups = lesson.Groups,
             Building = lesson.Building,
