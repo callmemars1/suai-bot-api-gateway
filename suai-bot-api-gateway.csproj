@@ -4,13 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>suai_bot_api_gateway</RootNamespace>
+    <RootNamespace>suai_api</RootNamespace>
     <UserSecretsId>f046fbbe-edb5-4565-a1dd-e8f0fafe8853</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Domain\TeacherInfo\Protos\TeacherInfoService.proto" />
     <None Remove="Domain\TimeTable\Protos\LessonTypes.proto" />
     <None Remove="Domain\TimeTable\Protos\TimeTableService.proto" />
     <None Remove="Domain\TimeTable\Protos\WeekDays.proto" />
@@ -34,10 +33,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\"/>
+    <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekDays.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
-    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\"/>
+    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\TeacherInfo\" />
   </ItemGroup>
 
 </Project>
