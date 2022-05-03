@@ -11,14 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<ITimetableProvider>((x) =>
 {
     var serviceUrl = builder.Configuration.GetValue<string>("schedule_service_addr");
-    return new GRPCTimetableProvider(x.GetRequiredService<ILogger<GRPCTimetableProvider>>(), serviceUrl);
+    return new TimetableProviderFromGRPCService(x.GetRequiredService<ILogger<TimetableProviderFromGRPCService>>(), serviceUrl);
 });
 
 var app = builder.Build();
 
 app.Map("/", () =>
 {
-    return $"This is main page\nAdd \"/api.[service].[method]/\" to address string to use api\n";
+    return $"This is main page\nAdd \"/[university_name].[service].[method]/\" to address string to use api\n";
 });
 
 //app.UseHttpsRedirection();

@@ -45,7 +45,7 @@ public class TimetableController : ControllerBase
         // Ошибка процедуры (но сервис доступен)
         catch (RpcException ex)
         {
-            _logger.LogError(ex, "Timetal");
+            _logger.LogError(ex, "Timetable service error");
             return ex.StatusCode switch
             {
                 Grpc.Core.StatusCode.NotFound => StatusCode(404),

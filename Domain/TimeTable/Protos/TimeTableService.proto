@@ -38,7 +38,7 @@ message Lesson
 	string classRoom = 4;
 	Types.WeekDays weekDay = 5;
 	Types.WeekTypes weekType = 6;
-	Types.LessonTypes lessonType = 7;
+	Types.LessonTypes type = 7;
 	string name = 8;
 	string startTime = 9;
 	string endTime = 10;

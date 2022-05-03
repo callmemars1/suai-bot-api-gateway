@@ -12,5 +12,5 @@ public record class Lesson
     public int OrderNumber { get; set; }
     public WeekDays WeekDay { get; set; }
     public WeekTypes WeekType { get; set; }
-    public LessonTypes LessonType { get; set; }
+    public LessonTypes Type { get; set; }
 }

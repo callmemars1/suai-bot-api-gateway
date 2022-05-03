@@ -7,17 +7,17 @@ namespace suai_api.Models.Timetable;
 /// Класс необходим для получения расписания с сервиса
 /// по gRPC
 /// </summary>
-public class GRPCTimetableProvider : ITimetableProvider
+public class TimetableProviderFromGRPCService : ITimetableProvider
 {
-    private TimetableServiceGrpcClient _client;
+    private readonly TimetableServiceGrpcClient _client;
 
-    private readonly ILogger<GRPCTimetableProvider> _logger;
+    private readonly ILogger<TimetableProviderFromGRPCService> _logger;
 
     /// <summary>
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="serviceAddress">URI сервиса</param>
-    public GRPCTimetableProvider(ILogger<GRPCTimetableProvider> logger, string serviceURI)
+    public TimetableProviderFromGRPCService(ILogger<TimetableProviderFromGRPCService> logger, string serviceURI)
     {
         _logger = logger;
         _client = new TimetableServiceGrpcClient(serviceURI);
@@ -53,7 +53,7 @@ public class GRPCTimetableProvider : ITimetableProvider
             Teacher = lesson.Teacher,
             WeekDay = (Domain.Timetable.WeekDays)(int)lesson.WeekDay,
             WeekType = (Domain.Timetable.WeekTypes)(int)lesson.WeekType,
-            LessonType = (Domain.Timetable.LessonTypes)(int)lesson.LessonType,
+            Type = (Domain.Timetable.LessonTypes)(int)lesson.Type,
             Name = lesson.Name,
             EndTime = lesson.EndTime,
             OrderNumber = lesson.OrderNumber,
