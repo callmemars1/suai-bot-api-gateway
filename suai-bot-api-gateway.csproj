@@ -39,8 +39,4 @@
     <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\TeacherInfo\" />
-  </ItemGroup>
-
 </Project>
