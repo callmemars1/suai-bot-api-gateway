@@ -1,6 +1,8 @@
-﻿namespace suai_api.Models.Timetable;
+﻿using Suai.Bot.Timetable.Proto;
+
+namespace suai_api.Models.Timetable;
 
 public interface ITimetableProvider
 {
-    TimetableResult GetTimetable(TimetableRequestArgs requestArgsArgs);
+    TimetableResult GetTimetable(TimetableRequest request);
 }

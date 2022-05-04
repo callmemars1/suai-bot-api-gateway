@@ -1,13 +1,15 @@
-﻿namespace suai_api.Models.Timetable;
+﻿using Suai.Bot.Timetable.Proto;
 
-public record struct TimetableResult(Domain.Timetable.WeekTypes ActualWeekType, IEnumerable<Domain.Timetable.LessonDto> Lessons)
+namespace suai_api.Models.Timetable;
+
+public record struct TimetableResult(WeekTypes ActualWeekType, IEnumerable<Lesson> Lessons)
 {
-    public static implicit operator (Domain.Timetable.WeekTypes actualWeekType, IEnumerable<Domain.Timetable.LessonDto> lessons)(TimetableResult value)
+    public static implicit operator (WeekTypes actualWeekType, IEnumerable<Lesson> lessons)(TimetableResult value)
     {
         return (value.ActualWeekType, value.Lessons);
     }
 
-    public static implicit operator TimetableResult((Domain.Timetable.WeekTypes actualWeekType, IEnumerable<Domain.Timetable.LessonDto> lessons) value)
+    public static implicit operator TimetableResult((WeekTypes actualWeekType, IEnumerable<Lesson> lessons) value)
     {
         return new TimetableResult(value.actualWeekType, value.lessons);
     }
