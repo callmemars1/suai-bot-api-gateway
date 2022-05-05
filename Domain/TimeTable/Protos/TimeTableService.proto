@@ -23,7 +23,6 @@ message TimetableRequest
 	string classRoom = 4;
 }
 
-// empty if nothing found
 message TimetableReply
 {
 	repeated Lesson lessons = 1;
