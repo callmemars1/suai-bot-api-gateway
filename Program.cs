@@ -22,6 +22,9 @@ app.Map("/", () =>
     return $"This is main page\nAdd \"/api.[service].[method]/\" to address string to use api\n";
 });
 
+
+Console.WriteLine("Some text to check");
+
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
