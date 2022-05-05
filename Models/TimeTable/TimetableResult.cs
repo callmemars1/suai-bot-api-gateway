@@ -2,7 +2,7 @@
 
 namespace suai_api.Models.Timetable;
 
-public record struct TimetableResult(WeekTypes ActualWeekType, IEnumerable<Lesson> Lessons)
+public record class TimetableResult(WeekTypes ActualWeekType, IEnumerable<Lesson> Lessons)
 {
     public static implicit operator (WeekTypes actualWeekType, IEnumerable<Lesson> lessons)(TimetableResult value)
     {

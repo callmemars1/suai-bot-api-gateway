@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Ошибка, означающая, что сервис не доступен.
-/// Возникает при следующих статусах RpcException:  Unavailable, DeadlineExceeded
+/// Возникает если сервис недоступен или превышено время ожидания ответа
 /// </summary>
 public class ServiceUnavailableException : Exception
 {

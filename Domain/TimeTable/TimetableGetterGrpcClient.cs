@@ -8,7 +8,7 @@ namespace suai_api.Domain.TimeTable;
 /// </summary>
 public class TimetableGetterGrpcClient : GrpcClientWithReconnect<TimetableProvider.TimetableProviderClient, TimetableReply, TimetableRequest>
 {
-    public TimetableGetterGrpcClient(string serviceURI, uint maxRetryCount = 0) : base(() => 
+    public TimetableGetterGrpcClient(string serviceURI, uint maxRetryCount = 0) : base(() =>
     {
         var channel = GrpcChannel.ForAddress(serviceURI);
         return new TimetableProvider.TimetableProviderClient(channel);

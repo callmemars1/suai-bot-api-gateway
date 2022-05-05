@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
+using Suai.Bot.Timetable.Proto;
 using suai_api.Domain.Timetable.Exceptions;
 using suai_api.Models.Timetable;
 
@@ -27,25 +28,8 @@ public class TimetableController : ControllerBase
     /// </summary>
     [HttpGet]
     [ActionName("get")]
-    public IActionResult GetTimetable([FromQuery] TimetableRequestArgs requestArgs)
+    public IActionResult GetTimetable([FromQuery] TimetableRequest requestArgs)
     {
-        var groups = new[] { "1","2","3" };
-        var lesson = new Suai.Bot.Timetable.Proto.Lesson
-        {
-            Name = "test name",
-            Building = "test building",
-            ClassRoom = "test classRoom",
-            EndTime = "test endtime",
-            OrderNumber = 228,
-            StartTime = "test starttime",
-            Type = Suai.Bot.Timetable.Proto.LessonTypes.Laboratory,
-            Teacher = "test teacher",
-            WeekDay = Suai.Bot.Timetable.Proto.WeekDays.Tuesday,
-            WeekType = Suai.Bot.Timetable.Proto.WeekTypes.Upper
-        };
-        lesson.Groups.AddRange(groups);
-        return new JsonResult(lesson);
-
         TimetableResult result;
         // Попытка получить данные о расписании от сервиса
         try
