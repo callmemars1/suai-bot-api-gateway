@@ -8,6 +8,7 @@
     <UserSecretsId>f046fbbe-edb5-4565-a1dd-e8f0fafe8853</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <BaseOutputPath>..\bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>..\obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,10 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\"/>
+    <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekDays.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
-    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\"/>
+    <Protobuf Include="Domain\TimeTable\Protos\TimeTableService.proto" ProtoRoot="Domain\TimeTable\Protos\" />
   </ItemGroup>
 
 </Project>
