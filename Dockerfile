@@ -1,22 +1,18 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
+﻿# https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["suai-api-schedule/suai-api-schedule.csproj", "suai-api-schedule/"]
-RUN dotnet restore "suai-api-schedule/suai-api-schedule.csproj"
+WORKDIR /source
+
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore
+
+# copy and publish app and libraries
 COPY . .
-WORKDIR "/src/suai-api-schedule"
-RUN dotnet build "suai-api-schedule.csproj" -c Release -o /app/build
+RUN dotnet publish -c release -o /app --no-restore
 
-FROM build AS publish
-RUN dotnet publish "suai-api-schedule.csproj" -c Release -o /app/publish
-
-FROM base AS final
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "suai-api-schedule.dll"]
+COPY --from=build /app .
+EXPOSE 50228
+ENTRYPOINT ["dotnet", "suai-bot-api-gateway.dll", "--urls", "http://0.0.0.0:50228/", "--schedule_service_addr", "http://localhost:2288/"]

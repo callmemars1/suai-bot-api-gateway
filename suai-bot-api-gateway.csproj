@@ -7,6 +7,8 @@
     <RootNamespace>suai_api</RootNamespace>
     <UserSecretsId>f046fbbe-edb5-4565-a1dd-e8f0fafe8853</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <BaseOutputPath>..\bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>..\obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
