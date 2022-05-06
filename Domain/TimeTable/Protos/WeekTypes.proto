@@ -1,8 +1,8 @@
 ﻿syntax = "proto3";
 
-package SuaiTimeTable.Types;
+package SuaiTimetable.Types;
 
-option csharp_namespace = "Suai.Bot.TimeTable.Proto";
+option csharp_namespace = "Suai.Bot.Timetable.Proto";
 
 enum WeekTypes 
 {
