@@ -1,8 +1,8 @@
-﻿using suai_api_schedule.Domain.TimeTable;
+﻿using Suai.Bot.Timetable.Proto;
 
-namespace suai_api_schedule.Models.TimeTable;
+namespace suai_api.Models.Timetable;
 
-public interface ITimeTableProvider
+public interface ITimetableProvider
 {
-    IEnumerable<Lesson> GetTimeTable(string group = "", string teacher = "", string building = "", string classRoom = "");
+    TimetableResult GetTimetable(TimetableRequest request);
 }
