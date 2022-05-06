@@ -12,14 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Domain\TeacherInfo\Protos\TeacherInfoService.proto" />
-    <None Remove="Domain\TimeTable\Protos\LessonTypes.proto" />
-    <None Remove="Domain\TimeTable\Protos\TimeTableService.proto" />
-    <None Remove="Domain\TimeTable\Protos\WeekDays.proto" />
-    <None Remove="Domain\TimeTable\Protos\WeekTypes.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -47,5 +39,9 @@
   <ItemGroup>
     <Folder Include="Models\TeacherInfo\" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT'">
+	  <Exec Command="rd &quot;$(ProjectDir)obj&quot; /s /q" />
+  </Target>
 
 </Project>
