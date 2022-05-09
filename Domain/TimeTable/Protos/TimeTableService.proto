@@ -23,7 +23,7 @@ message TimetableRequest
 	string classRoom = 4;
 }
 
-amessage TimetableReply
+message TimetableReply
 {
 	repeated Lesson lessons = 1;
 	Types.WeekTypes actualWeekType = 2;
