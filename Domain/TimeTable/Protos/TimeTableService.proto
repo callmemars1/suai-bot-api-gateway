@@ -32,7 +32,7 @@ message TimetableReply
 message Lesson
 {
 	repeated string groups = 1;
-	repeated string teacher = 2;
+	repeated string teachers = 2;
 	string building = 3;
 	string classRoom = 4;
 	Types.WeekDays weekDay = 5;
