@@ -11,7 +11,7 @@
   "profiles": {
     "suai-bot-api-schedule": {
       "commandName": "Project",
-      "commandLineArgs": "--urls http://localhost:50228 --schedule_service_addr http://localhost:2288/",
+      "commandLineArgs": "--urls http://0.0.0.0:50228 --schedule_service_addr http://localhost:2288/",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {

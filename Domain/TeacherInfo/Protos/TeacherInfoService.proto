@@ -4,28 +4,32 @@ package SuaiTeacherInfo;
 
 option csharp_namespace = "Suai.Bot.TeacherInfo.Proto";
 
-service TeacherInfoService
+service TeacherInfoProvider
 {
 	rpc GetTeacherInfo (TeacherInfoRequest) returns (TeacherInfoReply);
 }
 
 message TeacherInfoRequest 
 {
-	string name = 1;
+	string lastName = 1;
 }
 
 message TeacherInfoReply
 {
-	repeated TeacherInfo teachers = 1;
+	repeated TeacherInfoDto teachers = 1;
 }
 
-message TeacherInfo 
+message TeacherInfoDto
 {
-	string name = 1;
-	string institute = 2;
-	string department = 3;
-	string phone = 4;
-	string email = 5;
-	string academicDegree = 6;
-	string position = 7;
+	string firstName = 1;
+	string secondName = 2;
+	string lastName = 3;
+	string institute = 4;
+	string department = 5;
+	string phone = 6;
+	string email = 7;
+	string academicDegree = 8;
+	string teacherDegree = 9;
+	string position = 10;
+	string classRoom = 11;
 }

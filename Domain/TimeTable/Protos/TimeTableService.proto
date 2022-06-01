@@ -1,19 +1,21 @@
 ﻿syntax = "proto3";
 
-package SuaiTimeTable;
+package SuaiTimetable;
 
-option csharp_namespace = "Suai.Bot.TimeTable.Proto";
+option csharp_namespace = "Suai.Bot.Timetable.Proto";
+
+import "google/protobuf/timestamp.proto";
 
 import "LessonTypes.proto";
 import "WeekTypes.proto";
 import "WeekDays.proto";
 
-service TimeTableProvider 
+service TimetableProvider 
 {
-	rpc GetTimeTable(TimeTableRequest) returns (TimeTableReply);
+	rpc GetTimetable(TimetableRequest) returns (TimetableReply);
 }
 
-message TimeTableRequest 
+message TimetableRequest 
 {
 	string group = 1;
 	string teacher = 2;
@@ -21,8 +23,7 @@ message TimeTableRequest
 	string classRoom = 4;
 }
 
-// empty if nothing found
-message TimeTableReply
+message TimetableReply
 {
 	repeated Lesson lessons = 1;
 	Types.WeekTypes actualWeekType = 2;
@@ -30,11 +31,15 @@ message TimeTableReply
 
 message Lesson
 {
-	string group = 1;
-	string teacher = 2;
+	repeated string groups = 1;
+	repeated string teachers = 2;
 	string building = 3;
 	string classRoom = 4;
 	Types.WeekDays weekDay = 5;
 	Types.WeekTypes weekType = 6;
-	Types.LessonTypes lessonType = 7;
+	Types.LessonTypes type = 7;
+	string name = 8;
+	string startTime = 9;
+	string endTime = 10;
+	int32 orderNumber = 11;
 }

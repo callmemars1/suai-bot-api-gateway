@@ -1,53 +1,58 @@
 ﻿using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
-using suai_api_schedule.Domain.TimeTable;
-using suai_api_schedule.Domain.TimeTable.Exceptions;
-using suai_api_schedule.Models.TimeTable;
+using Suai.Bot.Timetable.Proto;
+using suai_api.Domain.Timetable.Exceptions;
+using suai_api.Models.Timetable;
 
-namespace suai_api_schedule.Controllers;
+namespace suai_api.Controllers;
 
+/// <summary>
+/// Контроллер апи расписания гуапа
+/// </summary>
 [ApiController()]
-[Route("api.[controller].[action]")]
-public class TimeTableController : ControllerBase
+[Route("[controller].[action]")]
+public class TimetableController : ControllerBase
 {
-    private readonly ILogger<TimeTableController> _logger;
-    readonly ITimeTableProvider _timeTableProvider;
-    public TimeTableController(ILogger<TimeTableController> logger, ITimeTableProvider scheduleProvider)
+    private readonly ILogger<TimetableController> _logger;
+
+    private readonly ITimetableProvider _timeTableProvider;
+
+    public TimetableController(ILogger<TimetableController> logger, ITimetableProvider timeTableProvider)
     {
         _logger = logger;
-        _timeTableProvider = scheduleProvider;
+        _timeTableProvider = timeTableProvider;
     }
 
+    /// <summary>
+    /// GET-Метод получения расписания
+    /// </summary>
     [HttpGet]
     [ActionName("get")]
-    // TODO: Вынести аргументы в отдельную структуру для читаемости,
-    // Убрать университет из запроса :(
-    public IActionResult GetTimeTable(string? university, string? group, string? teacher, string? building, string? classRoom)
+    public IActionResult GetTimetable([FromQuery] TimetableRequest requestArgs)
     {
-        IEnumerable<Lesson> lessons;
+        TimetableResult result;
         // Попытка получить данные о расписании от сервиса
         try
         {
-            lessons = _timeTableProvider.GetTimeTable(group, teacher, building, classRoom);
-            _logger.Log(LogLevel.Information, "{count} lessons received", lessons.Count());
+            result = _timeTableProvider.GetTimetable(requestArgs);
+            _logger.Log(LogLevel.Information, "{} lessons received", result.Lessons.Count());
         }
         // Если сервис недоступен
         catch (ServiceUnavailableException)
         {
-            _logger.Log(LogLevel.Warning, "TimeTable service unavailable");
+            _logger.Log(LogLevel.Warning, "Timetable service is unavailable");
             return StatusCode(503);
         }
         // Ошибка процедуры (но сервис доступен)
-        catch (RpcException ex) 
+        catch (RpcException ex)
         {
+            _logger.LogError(ex, "Timetable service error");
             return ex.StatusCode switch
             {
                 Grpc.Core.StatusCode.NotFound => StatusCode(404),
-                Grpc.Core.StatusCode.DeadlineExceeded => StatusCode(504),
                 _ => StatusCode(500),
             };
         }
-        return new JsonResult(lessons);
+        return new JsonResult(result);
     }
-
 }

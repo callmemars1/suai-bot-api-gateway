@@ -1,8 +1,8 @@
-﻿using suai_api.Domain.TeacherInfo;
+﻿using Suai.Bot.TeacherInfo.Proto;
 
 namespace suai_api.Models.TeacherInfo;
 
 public interface ITeacherInfoProvider
 {
-    TeacherInfoDto GetTeacherInfo(string name);
+    TeacherInfoReply GetTeacherInfo(string surname);
 }
