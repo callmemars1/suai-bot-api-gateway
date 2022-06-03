@@ -1,8 +1,13 @@
-﻿using Grpc.Core;
+﻿    using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 using Suai.Bot.TeacherInfo.Proto;
 using suai_api.Domain.Timetable.Exceptions;
 using suai_api.Models.TeacherInfo;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
+using System.Web;
 
 namespace suai_api.Controllers;
 
@@ -21,13 +26,13 @@ public class TeacherInfoController : ControllerBase
 
     [HttpGet]
     [ActionName("get")]
-    public IActionResult GetTeacherInfo(string surname) 
+    public IActionResult GetTeacherInfo(string lastName) 
     {
         TeacherInfoReply result;
+        _logger.Log(LogLevel.Warning, lastName);
         try
         {
-            result = _teacherInfoProvider.GetTeacherInfo(surname);
-            _logger.Log(LogLevel.Information, "Teacher with {} surname received", surname);
+            result = _teacherInfoProvider.GetTeacherInfo(lastName);
         }
         // Если сервис недоступен
         catch (ServiceUnavailableException)
@@ -45,6 +50,10 @@ public class TeacherInfoController : ControllerBase
                 _ => StatusCode(500),
             };
         }
-        return new JsonResult(result);
+        return new JsonResult(result, new JsonSerializerOptions 
+        {
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+            WriteIndented = true
+        });
     }
 }

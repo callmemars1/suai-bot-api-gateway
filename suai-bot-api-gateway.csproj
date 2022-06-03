@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Domain\TeacherInfo\Protos\TeacherService.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
@@ -29,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Domain\TeacherInfo\Protos\TeacherInfoService.proto" />
+    <Protobuf Include="Domain\TeacherInfo\Protos\TeacherService.proto" />
     <Protobuf Include="Domain\TimeTable\Protos\LessonTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekDays.proto" ProtoRoot="Domain\TimeTable\Protos\" />
     <Protobuf Include="Domain\TimeTable\Protos\WeekTypes.proto" ProtoRoot="Domain\TimeTable\Protos\" />
